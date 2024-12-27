@@ -1,27 +1,29 @@
 {
-  description = "🌨️ Install a nixos system remotely or in place";
+  description = "Gleam Template";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = {nixpkgs, ...}: let
-    forAllSystems = function:
-      nixpkgs.lib.genAttrs [
-        "x86_64-linux"
-        "aarch64-linux"
-      ] (system: function nixpkgs.legacyPackages.${system});
-  in rec {
-    devShells = forAllSystems (pkgs: {
-      default = pkgs.mkShell {
+  outputs = {
+    nixpkgs,
+    flake-utils,
+    ...
+  }:
+    flake-utils.lib.eachDefaultSystem (
+      system: let
+        pkgs = nixpkgs.legacyPackages.${system};
         nativeBuildInputs = with pkgs; [
-          alejandra
-        ];
-      };
-    });
+            gleam
+            erlang_27
 
-    packages = forAllSystems (pkgs: {
-      default = pkgs.callPackage ./pkgs/blizzard {};
-    });
-  };
+            # rebar3
+        ];
+
+        buildInputs = with pkgs; [];
+      in {
+        devShells.default = pkgs.mkShell {inherit nativeBuildInputs buildInputs;};
+      }
+    );
 }
