@@ -9,3 +9,6 @@ result*
 *.ez
 /build
 erl_crash.dump
+
+# Blizzard
+blizzard

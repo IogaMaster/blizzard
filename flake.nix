@@ -6,24 +6,22 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = {
-    nixpkgs,
-    flake-utils,
-    ...
-  }:
-    flake-utils.lib.eachDefaultSystem (
-      system: let
+  outputs = { nixpkgs, flake-utils, ... }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
         pkgs = nixpkgs.legacyPackages.${system};
         nativeBuildInputs = with pkgs; [
-            gleam
-            erlang_27
+          gleam
+          erlang_27
 
-            # rebar3
+          # rebar3
+
+          just
         ];
 
-        buildInputs = with pkgs; [];
+        buildInputs = with pkgs; [ ];
       in {
-        devShells.default = pkgs.mkShell {inherit nativeBuildInputs buildInputs;};
-      }
-    );
+        devShells.default =
+          pkgs.mkShell { inherit nativeBuildInputs buildInputs; };
+      });
 }
