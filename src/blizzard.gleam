@@ -21,6 +21,12 @@ pub fn main() {
 
   case result {
     Error(e) -> io.println_error(e)
-    Ok(args) -> args |> string.inspect |> io.println
+    Ok(args) -> {
+      case args {
+        install.InstallArgs(_systems_and_addresses) -> {
+          install.install(args)
+        }
+      }
+    }
   }
 }

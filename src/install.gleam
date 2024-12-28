@@ -3,6 +3,10 @@ import clip/arg
 import clip/flag
 import clip/help
 import clip/opt
+import gleam/io
+import gleam/list
+import gleam/set
+import gleam/string
 
 pub type InstallArgs {
   InstallArgs(systems_and_addresses: List(String))
@@ -23,4 +27,23 @@ pub fn install_command() {
     `blizzard install hostname1 ip1 hostname2 ip2`
     ",
   ))
+}
+
+pub fn install(args: InstallArgs) {
+  let system_address_pairs =
+    // This mess turns a list of alternating values into a list of tuples. [#(hostname, ip), ...]
+    args.systems_and_addresses
+    |> list.window_by_2()
+    |> list.index_map(fn(pair, index) {
+      case index % 2 {
+        0 -> pair
+        _ -> #("", "")
+      }
+    })
+    |> set.from_list()
+    |> set.drop([#("", "")])
+    |> set.to_list()
+    |> list.reverse()
+
+  io.println(string.inspect(system_address_pairs))
 }
