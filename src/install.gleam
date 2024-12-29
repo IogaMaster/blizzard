@@ -1,3 +1,4 @@
+import checks
 import clip
 import clip/arg
 import clip/flag
@@ -45,5 +46,5 @@ pub fn install(args: InstallArgs) {
     |> set.to_list()
     |> list.reverse()
 
-  io.println(string.inspect(system_address_pairs))
+  checks.checks(system_address_pairs)
 }
