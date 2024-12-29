@@ -9,7 +9,7 @@ pub fn checks(system_address_pairs: List(#(String, String))) {
   use pair <- list.each(system_address_pairs)
   let #(system, _address) = pair
 
-  io.println("🖥️ " <> system <> ":")
+  io.println("  🖥️ " <> system <> ":")
   ping(pair)
   rootable(pair)
   has_kexec(pair)
@@ -38,7 +38,7 @@ fn ping(system_address_pair: #(String, String)) {
 
   case command {
     Error(_) -> panic as "❌ Host is unreachable!"
-    Ok(_) -> io.println("  ✅ Host is reachable!")
+    Ok(_) -> io.println("    ✅ Host is reachable!")
   }
 }
 
@@ -46,7 +46,7 @@ fn rootable(system_address_pair: #(String, String)) {
   let command = utils.run_on_system(system_address_pair, "whoami")
   case command {
     Error(_) -> panic as "❌ Cannot become root!"
-    Ok(_) -> io.println("  ✅ Can become root!")
+    Ok(_) -> io.println("    ✅ Can become root!")
   }
 }
 
@@ -54,6 +54,6 @@ fn has_kexec(system_address_pair: #(String, String)) {
   let command = utils.run_on_system(system_address_pair, "command -v kexec")
   case command {
     Error(_) -> panic as "❌ kexec is not supported!"
-    Ok(_) -> io.println("  ✅ kexec is supported!")
+    Ok(_) -> io.println("    ✅ kexec is supported!")
   }
 }
