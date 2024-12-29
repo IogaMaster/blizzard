@@ -1,7 +1,5 @@
 import gleam/io
 import gleam/list
-import gleam/option
-import gleam/string
 import glexec as exec
 import utils
 
@@ -9,7 +7,7 @@ pub fn checks(system_address_pairs: List(#(String, String))) {
   io.println("📋 Preflight Checks:")
   runner_has_nix()
   use pair <- list.each(system_address_pairs)
-  let #(system, address) = pair
+  let #(system, _address) = pair
 
   io.println("🖥️ " <> system <> ":")
   ping(pair)

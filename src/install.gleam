@@ -1,13 +1,9 @@
 import checks
 import clip
 import clip/arg
-import clip/flag
 import clip/help
-import clip/opt
-import gleam/io
 import gleam/list
 import gleam/set
-import gleam/string
 
 pub type InstallArgs {
   InstallArgs(systems_and_addresses: List(String))

@@ -2,7 +2,6 @@ import argv
 import clip
 import clip/help
 import gleam/io
-import gleam/string
 
 import install
 

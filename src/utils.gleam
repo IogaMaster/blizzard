@@ -1,7 +1,7 @@
 import glexec as exec
 
 pub fn run_on_system(system_address_pair: #(String, String), command: String) {
-  let #(system, address) = system_address_pair
+  let #(_system, address) = system_address_pair
   let assert Ok(ssh) = exec.find_executable("ssh")
   exec.new()
   |> exec.with_stdin(exec.StdinPipe)
