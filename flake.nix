@@ -14,7 +14,7 @@
           gleam
           erlang_27
 
-          # rebar3
+          rebar3
 
           just
         ];
