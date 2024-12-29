@@ -25,7 +25,6 @@
 With blizzard you can install a nixos system in place.
 
 - 🏗️ Runs pre-flight checks:
-    - ❄️ Checks for nix (Installs if it's not present)
     - 📦 Checks for kexec functionality
 - ⚙️ Builds the installer and packs it into the kexec image:
     - 🏭 Creates Stage 2 installer
