@@ -1,11 +1,13 @@
 import gleam/io
 import gleam/list
+import gleam/option
 import gleam/string
 import glexec as exec
 import utils
 
 pub fn checks(system_address_pairs: List(#(String, String))) {
   io.println("📋 Preflight Checks:")
+  runner_has_nix()
   use pair <- list.each(system_address_pairs)
   let #(system, address) = pair
 
@@ -13,6 +15,14 @@ pub fn checks(system_address_pairs: List(#(String, String))) {
   ping(pair)
   rootable(pair)
   has_kexec(pair)
+}
+
+fn runner_has_nix() {
+  let nix = exec.find_executable("nix")
+  case nix {
+    Error(_) -> io.println_error("  ❌ You don't have nix installed!")
+    Ok(_) -> io.println("  ✅ You have nix installed!")
+  }
 }
 
 fn ping(system_address_pair: #(String, String)) {
